@@ -1,11 +1,13 @@
 FROM node:latest AS builder
 
-WORKDIR /app
-COPY package-lock.json package.json /app/
+RUN npm install -g pnpm
 
-RUN npm install
+WORKDIR /app
+COPY pnpm-lock.yaml package.json /app/
+
+RUN pnpm install
 COPY . .
-RUN npm run build
+RUN pnpm build
 
 FROM node:latest
 
